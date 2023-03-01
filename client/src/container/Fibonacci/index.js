@@ -53,7 +53,7 @@ const Fibonacci = () => {
           Enter your index:
         </label>
         <input
-          value={index}
+          value={index || ''}
           onChange={(event) => setIndex(event.target.value)} />
         <button>
           Submit
@@ -63,14 +63,14 @@ const Fibonacci = () => {
       <h3>
         Indexes i have seen:
       </h3>
-      {indexList.map(({ number }) => number).join(', ')}
+      {indexList?.map(({ number }) => number).join(', ')}
 
       <h3>
         Calculated values:
       </h3>
-      {values.map((value, index) => (
-        <div key={[index, value].join('_')}>
-          For index {index} I calculated {value}
+      {Object.entries(values)?.map(([key, value]) => (
+        <div key={[key, value].join('_')}>
+          For index {key} I calculated {value}
         </div>
       ))}
     </div>
