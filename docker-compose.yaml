@@ -29,6 +29,8 @@ services:
       - PG_PASSWORD=postgres_password
       - PG_PORT=5432
   client:
+    environment:
+      - WDS_SOCKET_PORT=0
     build:
       dockerfile: Dockerfile.dev
       context: ./client
