@@ -10,28 +10,37 @@ const Fibonacci = () => {
 
   const [index, setIndex] = useState(null)
 
+  const getCurrentValuesAjax = () => {
+    axios
+      .get('/api/values/current')
+      .then(res => {
+        setValues(res.data)
+
+        valuesInit.current = true
+      })
+      .catch(err => console.log(err))
+  }
+
+  const getAllValuesAjax = (setIndexList, indexListInit) => {
+    axios
+      .get('/api/values/all')
+      .then(res => {
+        setIndexList(res.data)
+
+        if (!indexListInit.current) {
+          indexListInit.current = true
+        }
+      })
+      .catch(err => console.log(err))
+  }
 
   useEffect(() => {
     if (!valuesInit.current) {
-      axios
-        .get('/api/values/current')
-        .then(res => {
-          setValues(res.data)
-
-          valuesInit.current = true
-        })
-        .catch(err => console.log(err))
+      getCurrentValuesAjax()
     }
 
     if (!indexListInit.current) {
-      axios
-        .get('/api/values/all')
-        .then(res => {
-          setIndexList(res.data)
-
-          indexListInit.current = true
-        })
-        .catch(err => console.log(err))
+      getAllValuesAjax(setIndexList, indexListInit)
     }
   }, [])
 
@@ -43,6 +52,10 @@ const Fibonacci = () => {
     })
 
     setIndex(null)
+
+    getCurrentValuesAjax()
+
+    getAllValuesAjax(setIndexList, indexListInit)
   }
 
   return (
