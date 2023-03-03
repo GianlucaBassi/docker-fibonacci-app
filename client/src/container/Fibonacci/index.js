@@ -16,7 +16,7 @@ const Fibonacci = () => {
       axios
         .get('/api/values/current')
         .then(res => {
-          setValues(res)
+          setValues(res.data)
 
           valuesInit.current = true
         })
@@ -27,7 +27,7 @@ const Fibonacci = () => {
       axios
         .get('/api/values/all')
         .then(res => {
-          setIndexList(res)
+          setIndexList(res.data)
 
           indexListInit.current = true
         })
@@ -70,7 +70,7 @@ const Fibonacci = () => {
       </h3>
       {Object.entries(values)?.map(([key, value]) => (
         <div key={[key, value].join('_')}>
-          For index {key} I calculated {value}
+          I calculated {value} for index {key}
         </div>
       ))}
     </div>
